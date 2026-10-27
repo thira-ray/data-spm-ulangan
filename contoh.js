@@ -3,6 +3,6 @@ window.ANSWER_BOOKS = {
     noPengenalan: "000000000000",
     angkaGiliran: "BA012A010",
     kodKertas: "1103",
-    nomorKertas: "1",
+    nomBorKertas: "1",
     namaKertas: "Bahasa Melayu"
   },
