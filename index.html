@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Buku Jawapan - SIJIL PELAJARAN MALAYSIA ULANGAN 2026</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #171717;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 34px 32px 40px;
+    }
+
+    .heading {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin: 0 0 12px;
+    }
+
+    .subtitle {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin: 0 0 42px;
+    }
+
+    .details {
+      border-bottom: 1px solid #777777;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      padding: 19px 16px;
+      border-bottom: 1px solid #eeeeee;
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    .detail-label {
+      overflow-wrap: anywhere;
+    }
+
+    .detail-value {
+      overflow-wrap: anywhere;
+      text-align: left;
+    }
+
+    .message {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555555;
+      padding-top: 20px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 380px) {
+      .container {
+        padding: 28px 20px;
+      }
+
+      .heading,
+      .subtitle {
+        font-size: 21px;
+      }
+
+      .detail-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 10px;
+        padding: 17px 12px;
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1 class="heading">BUKU JAWAPAN</h1>
+
+    <h2 class="subtitle">
+      SIJIL PELAJARAN MALAYSIA ULANGAN 2026
+    </h2>
+
+    <section class="details" id="details" hidden>
+      <div class="detail-row">
+        <div class="detail-label">Nomor Pengenalan Diri</div>
+        <div class="detail-value" id="no-pengenalan"></div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Nomor Angka Giliran</div>
+        <div class="detail-value" id="angka-giliran"></div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Kod Kertas</div>
+        <div class="detail-value" id="kod-kertas"></div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Nomor Kertas</div>
+        <div class="detail-value" id="nomor-kertas"></div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">Nama Kertas</div>
+        <div class="detail-value" id="nama-kertas"></div>
+      </div>
+    </section>
+
+    <p class="message" id="message" hidden></p>
+  </main>
+
+  <script src="answerbooks.js?v=1"></script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const kod = params.get("kod");
+
+    const record = kod && window.ANSWER_BOOKS
+      ? window.ANSWER_BOOKS[kod]
+      : null;
+
+    const details = document.getElementById("details");
+    const message = document.getElementById("message");
+
+    if (record) {
+      document.getElementById("no-pengenalan").textContent =
+        record.noPengenalan || "-";
+
+      document.getElementById("angka-giliran").textContent =
+        record.angkaGiliran || "-";
+
+      document.getElementById("kod-kertas").textContent =
+        record.kodKertas || "-";
+
+      document.getElementById("nomor-kertas").textContent =
+        record.nomorKertas || "-";
+
+      document.getElementById("nama-kertas").textContent =
+        record.namaKertas || "-";
+
+      details.hidden = false;
+    } else {
+      message.textContent = kod
+        ? "Maklumat tidak dijumpai. Sila semak kod QR anda."
+        : "Sila imbas kod QR yang sah untuk melihat maklumat.";
+
+      message.hidden = false;
+    }
+  </script>
+</body>
+</html>
