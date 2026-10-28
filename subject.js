@@ -5,8 +5,9 @@ window.SUBJECT = {
     namaKertas: "Bahasa Melayu"
   },
 
-  "sejarah": {
-    kodKertas: "1249 contoh je",
+  "sejarah-try": {
+    kodKertas: "1249",
     nomborKertas: "1",
     namaKertas: "Sejarah"
+  },
   };
