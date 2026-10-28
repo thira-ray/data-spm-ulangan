@@ -1,4 +1,4 @@
-windows.STUDNENT = {
+window.STUDENT = {
   "AZ400J001": { noPengenalan: "000000000001", angkaGiliran: "AZ400J001" },
 "AZ400J002": { noPengenalan: "000000000002", angkaGiliran: "AZ400J002" },
 "AZ400J003": { noPengenalan: "000000000003", angkaGiliran: "AZ400J003" },
