@@ -100,5 +100,5 @@ window.STUDENT = {
 "AZ400J099": { noPengenalan: "000000000099", angkaGiliran: "AZ400J099" },
 "AZ400J100": { noPengenalan: "000000000100", angkaGiliran: "AZ400J100" },
 "AZ400J101": { noPengenalan: "000000000101", angkaGiliran: "AZ400J101" },
-"AZ400J102": { noPengenalan: "000000000102", angkaGiliran: "AZ400J102" },
+"AZ400J102": { noPengenalan: "000000000102", angkaGiliran: "AZ400J102" }
 };
