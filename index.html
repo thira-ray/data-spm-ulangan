@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Buku Jawapan - SPMU 2026</title>
 
   <style>
@@ -12,198 +13,224 @@
 
     body {
       margin: 0;
-      background: #fff;
-      color: #171717;
+      padding: 20px;
+      background: #f3f5f8;
+      color: #17212b;
       font-family: Arial, Helvetica, sans-serif;
     }
 
     .container {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 34px 32px 40px;
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 30px;
+      background: #ffffff;
+      border: 1px solid #e1e5ea;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(20, 35, 50, 0.07);
     }
 
-    .heading {
-      font-size: 23px;
-      font-weight: 700;
+    h1 {
+      margin: 0 0 10px;
+      font-size: 27px;
+    }
+
+    h2 {
+      margin: 0 0 30px;
+      color: #536273;
+      font-size: 17px;
       line-height: 1.5;
-      margin: 0 0 12px;
     }
 
-    .subtitle {
-      font-size: 23px;
-      font-weight: 700;
-      line-height: 1.5;
-      margin: 0 0 42px;
-    }
-
-    .details {
-      border-bottom: 1px solid #777;
-    }
-
-    .detail-row {
+    .row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 16px;
-      align-items: center;
-      padding: 19px 16px;
-      border-bottom: 1px solid #eee;
-      font-size: 20px;
-      line-height: 1.45;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      padding: 17px 4px;
+      border-bottom: 1px solid #e5e9ee;
+      line-height: 1.5;
     }
 
-    .detail-label,
-    .detail-value {
+    .label {
+      color: #536273;
+    }
+
+    .value {
+      font-weight: bold;
       overflow-wrap: anywhere;
     }
 
-    .detail-value {
-      text-align: left;
-    }
-
-    .message {
-      font-size: 16px;
+    #message {
+      margin-top: 20px;
+      color: #8a3b25;
       line-height: 1.6;
-      color: #555;
-      padding-top: 20px;
     }
 
     [hidden] {
       display: none !important;
     }
 
-    @media (max-width: 380px) {
+    @media (max-width: 480px) {
       .container {
-        padding: 28px 20px;
+        margin: 10px auto;
+        padding: 22px 18px;
       }
 
-      .heading,
-      .subtitle {
-        font-size: 21px;
+      h1 {
+        font-size: 23px;
       }
 
-      .detail-row {
-        gap: 10px;
-        padding: 17px 12px;
-        font-size: 17px;
+      h2 {
+        font-size: 15px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        padding: 14px 2px;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <h1 class="heading">BUKU JAWAPAN</h1>
 
-    <h2 class="subtitle">
+  <main class="container">
+
+    <h1>BUKU JAWAPAN</h1>
+
+    <h2>
       SIJIL PELAJARAN MALAYSIA ULANGAN 2026
     </h2>
 
-    <section class="details" id="details" hidden>
-      <div class="detail-row">
-        <div class="detail-label">Nombor Pengenalan Diri</div>
-        <div class="detail-value" id="no-pengenalan"></div>
+    <section id="details" hidden>
+
+      <div class="row">
+        <div class="label">Nombor Pengenalan Diri</div>
+        <div class="value" id="no-pengenalan">-</div>
       </div>
 
-      <div class="detail-row">
-        <div class="detail-label">Nombor Angka Giliran</div>
-        <div class="detail-value" id="angka-giliran"></div>
+      <div class="row">
+        <div class="label">Nombor Angka Giliran</div>
+        <div class="value" id="angka-giliran">-</div>
       </div>
 
-      <div class="detail-row">
-        <div class="detail-label">Kod Kertas</div>
-        <div class="detail-value" id="kod-kertas"></div>
+      <div class="row">
+        <div class="label">Kod Kertas</div>
+        <div class="value" id="kod-kertas">-</div>
       </div>
 
-      <div class="detail-row">
-        <div class="detail-label">Nombor Kertas</div>
-        <div class="detail-value" id="nombor-kertas"></div>
+      <div class="row">
+        <div class="label">Nombor Kertas</div>
+        <div class="value" id="nombor-kertas">-</div>
       </div>
 
-      <div class="detail-row">
-        <div class="detail-label">Nama Kertas</div>
-        <div class="detail-value" id="nama-kertas"></div>
+      <div class="row">
+        <div class="label">Nama Kertas</div>
+        <div class="value" id="nama-kertas">-</div>
       </div>
+
     </section>
 
-    <p class="message" id="message" hidden></p>
+    <p id="message" role="status" aria-live="polite">
+      Sedang memuatkan maklumat...
+    </p>
+
   </main>
 
- 
+  <script>
+    // Read information from the QR code URL.
+    const params = new URLSearchParams(
+      window.location.search
+    );
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const angka = (params.get('angka') || '').trim().toUpperCase();
-const subjectSlug = (params.get('subjek') || '').trim().toLowerCase();
+    const angka = (
+      params.get("angka") || ""
+    ).trim().toUpperCase();
 
-const details = document.querySelector('.details');
-const note = document.querySelector('.sample-note');
+    const subjek = (
+      params.get("subjek") || ""
+    ).trim().toLowerCase();
 
-document.querySelector('.controls').hidden = true;
-details.hidden = true;
-note.hidden = false;
-note.textContent = 'Sedang memuatkan maklumat...';
+    const details = document.getElementById("details");
+    const message = document.getElementById("message");
 
-function loadScript(filename) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = filename + '?v=5';
+    // Load a JavaScript data file.
+    function loadScript(filename) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
 
-    script.onload = resolve;
-    script.onerror = () =>
-      reject(new Error('Tidak dapat memuatkan ' + filename));
+        script.src = filename + "?v=7";
 
-    document.body.appendChild(script);
-  });
-}
+        script.onload = resolve;
 
-async function showRecord() {
-  if (!angka || !subjectSlug) {
-    note.textContent =
-      'Sila imbas kod QR yang sah untuk melihat maklumat.';
-    return;
-  }
+        script.onerror = () => {
+          reject(new Error("Unable to load " + filename));
+        };
 
-  try {
-    await loadScript('students.js');
-    await loadScript('subjects.js');
-
-    const student = window.STUDENTS?.[angka];
-    const subject = window.SUBJECTS?.[subjectSlug];
-
-    if (!student || !subject) {
-      note.textContent =
-        'Maklumat pelajar atau subjek tidak dijumpai.';
-      return;
+        document.body.appendChild(script);
+      });
     }
 
-    document.getElementById('nombor-pengenalan').textContent =
-      student.noPengenalan || '-';
+    async function showRecord() {
 
-    document.getElementById('angka-giliran').textContent =
-      student.angkaGiliran || angka;
+      // Check whether the QR URL contains both parameters.
+      if (!angka || !subjek) {
+        message.textContent =
+          "Kod QR tidak lengkap. Sila semak pautan QR.";
+        return;
+      }
 
-    document.getElementById('kod-kertas').textContent =
-      subject.kodKertas || '-';
+      try {
 
-    document.getElementById('nomor-kertas').textContent =
-      subject.nomborKertas || '-';
+        // Load student and subject data.
+        await loadScript("students.js");
+        await loadScript("subjects.js");
 
-    document.getElementById('nama-kertas').textContent =
-      subject.namaKertas || '-';
+        // Find the student and subject.
+        const student = window.STUDENTS?.[angka];
+        const subject = window.SUBJECTS?.[subjek];
 
-    details.hidden = false;
-    note.hidden = true;
+        // Display an error if the record cannot be found.
+        if (!student || !subject) {
+          message.textContent =
+            "Maklumat pelajar atau mata pelajaran tidak dijumpai.";
+          return;
+        }
 
-  } catch (error) {
-    note.textContent =
-      'Fail students.js atau subjects.js tidak dapat dimuatkan. ' +
-      'Pastikan kedua-dua fail berada dalam folder yang sama.';
-  }
-}
+        // Display student information.
+        document.getElementById("no-pengenalan").textContent =
+          student.noPengenalan || "-";
 
-showRecord();
-</script>
+        document.getElementById("angka-giliran").textContent =
+          student.angkaGiliran || angka;
+
+        // Display subject information.
+        document.getElementById("kod-kertas").textContent =
+          subject.kodKertas || "-";
+
+        document.getElementById("nombor-kertas").textContent =
+          subject.nomborKertas || "-";
+
+        document.getElementById("nama-kertas").textContent =
+          subject.namaKertas || "-";
+
+        // Show the completed record.
+        details.hidden = false;
+        message.hidden = true;
+
+      } catch (error) {
+
+        message.textContent =
+          "Data tidak dapat dimuatkan. Pastikan students.js " +
+          "dan subjects.js berada dalam folder yang sama " +
+          "dengan index.html.";
+
+        console.error(error);
+      }
+    }
+
+    showRecord();
+  </script>
+
 </body>
 </html>
