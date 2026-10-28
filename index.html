@@ -131,67 +131,44 @@
     <p class="message" id="message" hidden></p>
   </main>
 
-  <script>
-    // SAMPLE DATA: replace with your authorised records.
-    // Each unique key corresponds to one QR code.
+ 
+<script src="data.js"></script>
 
-    const ANSWER_BOOKS = {
-      "SPMU001": {
-        noPengenalan: "000000000000",
-        angkaGiliran: "BA012A010",
-        kodKertas: "1103",
-        nomborKertas: "1",
-        namaKertas: "Bahasa Melayu"
-      },
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const kod = params.get("kod");
 
-      "SPMU002": {
-        noPengenalan: "111111111111",
-        angkaGiliran: "BA012A011",
-        kodKertas: "1119",
-        nomborKertas: "1",
-        namaKertas: "Bahasa Inggeris"
-      },
+  const record = kod && window.ANSWER_BOOKS
+    ? window.ANSWER_BOOKS[kod]
+    : null;
 
-      "SPMU003": {
-        noPengenalan: "222222222222",
-        angkaGiliran: "BA012A012",
-        kodKertas: "1249",
-        nomborKertas: "1",
-        namaKertas: "Sejarah"
-      }
-    };
+  const details = document.getElementById("details");
+  const message = document.getElementById("message");
 
-    const params = new URLSearchParams(window.location.search);
-    const kod = params.get("kod");
-    const record = kod ? ANSWER_BOOKS[kod] : null;
+  if (record) {
+    document.getElementById("no-pengenalan").textContent =
+      record.noPengenalan || "-";
 
-    const details = document.getElementById("details");
-    const message = document.getElementById("message");
+    document.getElementById("angka-giliran").textContent =
+      record.angkaGiliran || "-";
 
-    if (record) {
-      document.getElementById("no-pengenalan").textContent =
-        record.noPengenalan || "-";
+    document.getElementById("kod-kertas").textContent =
+      record.kodKertas || "-";
 
-      document.getElementById("angka-giliran").textContent =
-        record.angkaGiliran || "-";
+    document.getElementById("nombor-kertas").textContent =
+      record.nomborKertas || "-";
 
-      document.getElementById("kod-kertas").textContent =
-        record.kodKertas || "-";
+    document.getElementById("nama-kertas").textContent =
+      record.namaKertas || "-";
 
-      document.getElementById("nombor-kertas").textContent =
-        record.nomborKertas || "-";
+    details.hidden = false;
+  } else {
+    message.textContent = kod
+      ? "Maklumat tidak dijumpai. Sila semak kod QR anda."
+      : "Sila imbas kod QR yang sah untuk melihat maklumat.";
 
-      document.getElementById("nama-kertas").textContent =
-        record.namaKertas || "-";
-
-      details.hidden = false;
-    } else {
-      message.textContent = kod
-        ? "Maklumat tidak dijumpai. Sila semak kod QR anda."
-        : "Sila imbas kod QR yang sah untuk melihat maklumat.";
-
-      message.hidden = false;
-    }
-  </script>
+    message.hidden = false;
+  }
+</script>
 </body>
 </html>
