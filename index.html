@@ -1,9 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Buku Jawapan - SPMU 2026</title>
 
   <style>
@@ -13,7 +13,7 @@
 
     body {
       margin: 0;
-      background: #ffffff;
+      background: #fff;
       color: #171717;
       font-family: Arial, Helvetica, sans-serif;
     }
@@ -40,7 +40,7 @@
     }
 
     .details {
-      border-bottom: 1px solid #777777;
+      border-bottom: 1px solid #777;
     }
 
     .detail-row {
@@ -49,24 +49,24 @@
       gap: 16px;
       align-items: center;
       padding: 19px 16px;
-      border-bottom: 1px solid #eeeeee;
+      border-bottom: 1px solid #eee;
       font-size: 20px;
       line-height: 1.45;
     }
 
-    .detail-label {
+    .detail-label,
+    .detail-value {
       overflow-wrap: anywhere;
     }
 
     .detail-value {
-      overflow-wrap: anywhere;
       text-align: left;
     }
 
     .message {
       font-size: 16px;
       line-height: 1.6;
-      color: #555555;
+      color: #555;
       padding-top: 20px;
     }
 
@@ -85,7 +85,6 @@
       }
 
       .detail-row {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 10px;
         padding: 17px 12px;
         font-size: 17px;
@@ -132,18 +131,42 @@
     <p class="message" id="message" hidden></p>
   </main>
 
-  <script src="contoh.js?v=1"></script>
-
   <script>
+    // SAMPLE DATA: replace with your authorised records.
+    // Each unique key corresponds to one QR code.
+
+    const ANSWER_BOOKS = {
+      "SPMU001": {
+        noPengenalan: "000000000000",
+        angkaGiliran: "BA012A010",
+        kodKertas: "1103",
+        nomborKertas: "1",
+        namaKertas: "Bahasa Melayu"
+      },
+
+      "SPMU002": {
+        noPengenalan: "111111111111",
+        angkaGiliran: "BA012A011",
+        kodKertas: "1119",
+        nomborKertas: "1",
+        namaKertas: "Bahasa Inggeris"
+      },
+
+      "SPMU003": {
+        noPengenalan: "222222222222",
+        angkaGiliran: "BA012A012",
+        kodKertas: "1249",
+        nomborKertas: "1",
+        namaKertas: "Sejarah"
+      }
+    };
+
     const params = new URLSearchParams(window.location.search);
     const kod = params.get("kod");
-
-    const record = kod && window.ANSWER_BOOKS
-      ? window.ANSWER_BOOKS[kod]
-      : null;
+    const record = kod ? ANSWER_BOOKS[kod] : null;
 
     const details = document.getElementById("details");
-    const details = document.getElementById("message");
+    const message = document.getElementById("message");
 
     if (record) {
       document.getElementById("no-pengenalan").textContent =
