@@ -187,8 +187,8 @@
         await loadScript("subject.js");
 
         // Find the student and subject.
-        const student = window.STUDENTS?.[angka];
-        const subject = window.SUBJECTS?.[subjek];
+        const student = window.STUDENT?.[angka];
+        const subject = window.SUBJECT?.[subjek];
 
         // Display an error if the record cannot be found.
         if (!student || !subject) {
