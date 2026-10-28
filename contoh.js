@@ -5,5 +5,5 @@ window.ANSWER_BOOKS = {
     kodKertas: "1103",
     nomborKertas: "1",
     namaKertas: "Bahasa Melayu"
-   }
-  },
+  }
+};
