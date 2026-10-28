@@ -9,5 +9,5 @@ window.SUBJECT = {
     kodKertas: "1249",
     nomborKertas: "1",
     namaKertas: "Sejarah"
-  },
+  }
   };
