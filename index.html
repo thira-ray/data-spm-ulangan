@@ -131,43 +131,79 @@
   </main>
 
  
-<script src="contoh.js?v=1"></script>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const kod = params.get("kod");
+const params = new URLSearchParams(window.location.search);
+const angka = (params.get('angka') || '').trim().toUpperCase();
+const subjectSlug = (params.get('subjek') || '').trim().toLowerCase();
 
-  const record = kod && window.ANSWER_BOOKS
-    ? window.ANSWER_BOOKS[kod]
-    : null;
+const details = document.querySelector('.details');
+const note = document.querySelector('.sample-note');
 
-  const details = document.getElementById("details");
-  const message = document.getElementById("message");
+document.querySelector('.controls').hidden = true;
+details.hidden = true;
+note.hidden = false;
+note.textContent = 'Sedang memuatkan maklumat...';
 
-  if (record) {
-    document.getElementById("no-pengenalan").textContent =
-      record.noPengenalan || "-";
+function loadScript(filename) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = filename + '?v=5';
 
-    document.getElementById("angka-giliran").textContent =
-      record.angkaGiliran || "-";
+    script.onload = resolve;
+    script.onerror = () =>
+      reject(new Error('Tidak dapat memuatkan ' + filename));
 
-    document.getElementById("kod-kertas").textContent =
-      record.kodKertas || "-";
+    document.body.appendChild(script);
+  });
+}
 
-    document.getElementById("nombor-kertas").textContent =
-      record.nomborKertas || "-";
+async function showRecord() {
+  if (!angka || !subjectSlug) {
+    note.textContent =
+      'Sila imbas kod QR yang sah untuk melihat maklumat.';
+    return;
+  }
 
-    document.getElementById("nama-kertas").textContent =
-      record.namaKertas || "-";
+  try {
+    await loadScript('students.js');
+    await loadScript('subjects.js');
+
+    const student = window.STUDENTS?.[angka];
+    const subject = window.SUBJECTS?.[subjectSlug];
+
+    if (!student || !subject) {
+      note.textContent =
+        'Maklumat pelajar atau subjek tidak dijumpai.';
+      return;
+    }
+
+    document.getElementById('nombor-pengenalan').textContent =
+      student.noPengenalan || '-';
+
+    document.getElementById('angka-giliran').textContent =
+      student.angkaGiliran || angka;
+
+    document.getElementById('kod-kertas').textContent =
+      subject.kodKertas || '-';
+
+    document.getElementById('nomor-kertas').textContent =
+      subject.nomborKertas || '-';
+
+    document.getElementById('nama-kertas').textContent =
+      subject.namaKertas || '-';
 
     details.hidden = false;
-  } else {
-    message.textContent = kod
-      ? "Maklumat tidak dijumpai. Sila semak kod QR anda."
-      : "Sila imbas kod QR yang sah untuk melihat maklumat.";
+    note.hidden = true;
 
-    message.hidden = false;
+  } catch (error) {
+    note.textContent =
+      'Fail students.js atau subjects.js tidak dapat dimuatkan. ' +
+      'Pastikan kedua-dua fail berada dalam folder yang sama.';
   }
+}
+
+showRecord();
 </script>
 </body>
 </html>
