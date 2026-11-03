@@ -1,6 +1,6 @@
 window.SUBJECT = {
    "bahasa-melayu": {
-    kodKertas: "1103/1",
+    kodKertas: "1103/2",
     nomborKertas: "2",
     namaKertas: "Bahasa Melayu"
   },
